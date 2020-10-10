@@ -40,6 +40,6 @@ Files in `./dist` can be uploaded to a webserver.
 
 # TODO
 
- - [ ] Get "console" output working. Possible bad image?
  - [ ] Add [Monaco Editor](https://microsoft.github.io/monaco-editor/) to page instead of HTML text box.
  - [ ] Improve canvas support
+ - [ ] Use a `step()` function instead of a loop to avoid blocking main thread.

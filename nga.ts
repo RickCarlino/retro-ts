@@ -525,8 +525,18 @@ function saveproject() {
   localStorage.setItem("Snapshot", getInputBuffer());
 }
 
+const DEFAULT_CODE = `
+# Welcome to Retro!
+
+Take a look at the Retro handbook at http://forth.works/book.html
+
+~~~
+'Hello_world! s:put
+~~~
+
+`;
 function loadproject() {
-  replaceInputBuffer(localStorage.getItem("Snapshot") || "");
+  replaceInputBuffer(localStorage.getItem("Snapshot") || DEFAULT_CODE);
 }
 
 function draw(fb_start: number) {
