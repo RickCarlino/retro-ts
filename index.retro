@@ -1,0 +1,681 @@
+~~~
+'FB d:create
+  #300 #300 * allot
+
+:draw FB #1 io:invoke ;
+
+#300 'fb:W const
+#300 'fb:H const
+
+:3drop drop drop drop ;
+
+:fb:set-pixel (color,row,column) swap fb:W * + FB + store ;
+
+:fb:hline (color,row,column,width) [ 'abc 'abcabc reorder fb:set-pixel n:inc ] times 3drop ;
+
+:fb:vline (color,row,column,width)
+  [ 'abc 'abcabc reorder fb:set-pixel &n:inc dip ] times 3drop ;
+
+:s:to-number<hex> (s-n)
+  dup fetch $- eq? [ n:inc #-1 ] [ #0 ] choose swap
+  #0 swap [ '0123456789ABCDEF swap s:index-of + #16 * ] s:for-each
+  #16 / swap 0; * ;
+
+:fb:color ('rrggbb-n)
+  s:to-number<hex> ;
+
+'000000 fb:color 'color:Black const
+'0C090A fb:color 'color:Night const
+'2C3539 fb:color 'color:Gunmetal const
+'2B1B17 fb:color 'color:Midnight const
+'34282C fb:color 'color:Charcoal const
+'25383C fb:color 'color:DarkSlateGrey const
+'3B3131 fb:color 'color:Oil const
+'413839 fb:color 'color:BlackCat const
+'3D3C3A fb:color 'color:Iridium const
+'463E3F fb:color 'color:BlackEel const
+'4C4646 fb:color 'color:BlackCow const
+'504A4B fb:color 'color:GrayWolf const
+'565051 fb:color 'color:VampireGray const
+'5C5858 fb:color 'color:GrayDolphin const
+'625D5D fb:color 'color:CarbonGray const
+'666362 fb:color 'color:AshGray const
+'6D6968 fb:color 'color:CloudyGray const
+'726E6D fb:color 'color:SmokeyGray const
+'736F6E fb:color 'color:Gray const
+'837E7C fb:color 'color:Granite const
+'848482 fb:color 'color:BattleshipGray const
+'B6B6B4 fb:color 'color:GrayCloud const
+'D1D0CE fb:color 'color:GrayGoose const
+'E5E4E2 fb:color 'color:Platinum const
+'BCC6CC fb:color 'color:MetallicSilver const
+'98AFC7 fb:color 'color:BlueGray const
+'6D7B8D fb:color 'color:LightSlateGray const
+'657383 fb:color 'color:SlateGray const
+'616D7E fb:color 'color:JetGray const
+'646D7E fb:color 'color:MistBlue const
+'566D7E fb:color 'color:MarbleBlue const
+'737CA1 fb:color 'color:SlateBlue const
+'4863A0 fb:color 'color:SteelBlue const
+'2B547E fb:color 'color:BlueJay const
+'2B3856 fb:color 'color:DarkSlateBlue const
+'151B54 fb:color 'color:MidnightBlue const
+'000080 fb:color 'color:NavyBlue const
+'342D7E fb:color 'color:BlueWhale const
+'15317E fb:color 'color:LapisBlue const
+'151B8D fb:color 'color:DenimDarkBlue const
+'0000A0 fb:color 'color:EarthBlue const
+'0020C2 fb:color 'color:CobaltBlue const
+'0041C2 fb:color 'color:BlueberryBlue const
+'2554C7 fb:color 'color:SapphireBlue const
+'1569C7 fb:color 'color:BlueEyes const
+'2B60DE fb:color 'color:RoyalBlue const
+'1F45FC fb:color 'color:BlueOrchid const
+'6960EC fb:color 'color:BlueLotus const
+'736AFF fb:color 'color:LightSlateBlue const
+'357EC7 fb:color 'color:WindowsBlue const
+'368BC1 fb:color 'color:GlacialBlueIce const
+'488AC7 fb:color 'color:SilkBlue const
+'3090C7 fb:color 'color:BlueIvy const
+'659EC7 fb:color 'color:BlueKoi const
+'87AFC7 fb:color 'color:ColumbiaBlue const
+'95B9C7 fb:color 'color:BabyBlue const
+'728FCE fb:color 'color:LightSteelBlue const
+'2B65EC fb:color 'color:OceanBlue const
+'306EFF fb:color 'color:BlueRibbon const
+'157DEC fb:color 'color:BlueDress const
+'1589FF fb:color 'color:DodgerBlue const
+'6495ED fb:color 'color:CornflowerBlue const
+'6698FF fb:color 'color:SkyBlue const
+'38ACEC fb:color 'color:ButterflyBlue const
+'56A5EC fb:color 'color:Iceberg const
+'5CB3FF fb:color 'color:CrystalBlue const
+'3BB9FF fb:color 'color:DeepSkyBlue const
+'79BAEC fb:color 'color:DenimBlue const
+'82CAFA fb:color 'color:LightSkyBlue const
+'82CAFF fb:color 'color:DaySkyBlue const
+'A0CFEC fb:color 'color:JeansBlue const
+'B7CEEC fb:color 'color:BlueAngel const
+'B4CFEC fb:color 'color:PastelBlue const
+'C2DFFF fb:color 'color:SeaBlue const
+'C6DEFF fb:color 'color:PowderBlue const
+'AFDCEC fb:color 'color:CoralBlue const
+'ADDFFF fb:color 'color:LightBlue const
+'BDEDFF fb:color 'color:RobinEggBlue const
+'CFECEC fb:color 'color:PaleBlueLily const
+'E0FFFF fb:color 'color:LightCyan const
+'EBF4FA fb:color 'color:Water const
+'F0F8FF fb:color 'color:AliceBlue const
+'F0FFFF fb:color 'color:Azure const
+'CCFFFF fb:color 'color:LightSlate const
+'93FFE8 fb:color 'color:LightAquamarine const
+'9AFEFF fb:color 'color:ElectricBlue const
+'7FFFD4 fb:color 'color:Aquamarine const
+'00FFFF fb:color 'color:CyanorAqua const
+'7DFDFE fb:color 'color:TronBlue const
+'57FEFF fb:color 'color:BlueZircon const
+'8EEBEC fb:color 'color:BlueLagoon const
+'50EBEC fb:color 'color:Celeste const
+'4EE2EC fb:color 'color:BlueDiamond const
+'81D8D0 fb:color 'color:TiffanyBlue const
+'92C7C7 fb:color 'color:CyanOpaque const
+'77BFC7 fb:color 'color:BlueHosta const
+'78C7C7 fb:color 'color:NorthernLightsBlue const
+'48CCCD fb:color 'color:MediumTurquoise const
+'43C6DB fb:color 'color:Turquoise const
+'46C7C7 fb:color 'color:Jellyfish const
+'7BCCB5 fb:color 'color:Bluegreen const
+'43BFC7 fb:color 'color:MacawBlueGreen const
+'3EA99F fb:color 'color:LightSeaGreen const
+'3B9C9C fb:color 'color:DarkTurquoise const
+'438D80 fb:color 'color:SeaTurtleGreen const
+'348781 fb:color 'color:MediumAquamarine const
+'307D7E fb:color 'color:GreenishBlue const
+'5E7D7E fb:color 'color:GrayishTurquoise const
+'4C787E fb:color 'color:BeetleGreen const
+'008080 fb:color 'color:Teal const
+'4E8975 fb:color 'color:SeaGreen const
+'78866B fb:color 'color:CamouflageGreen const
+'848b79 fb:color 'color:SageGreen const
+'617C58 fb:color 'color:HazelGreen const
+'728C00 fb:color 'color:VenomGreen const
+'667C26 fb:color 'color:FernGreen const
+'254117 fb:color 'color:DarkForestGreen const
+'306754 fb:color 'color:MediumSeaGreen const
+'347235 fb:color 'color:MediumForestGreen const
+'437C17 fb:color 'color:SeaweedGreen const
+'387C44 fb:color 'color:PineGreen const
+'347C2C fb:color 'color:JungleGreen const
+'347C17 fb:color 'color:ShamrockGreen const
+'348017 fb:color 'color:MediumSpringGreen const
+'4E9258 fb:color 'color:ForestGreen const
+'6AA121 fb:color 'color:GreenOnion const
+'4AA02C fb:color 'color:SpringGreen const
+'41A317 fb:color 'color:LimeGreen const
+'3EA055 fb:color 'color:CloverGreen const
+'6CBB3C fb:color 'color:GreenSnake const
+'6CC417 fb:color 'color:AlienGreen const
+'4CC417 fb:color 'color:GreenApple const
+'52D017 fb:color 'color:YellowGreen const
+'4CC552 fb:color 'color:KellyGreen const
+'54C571 fb:color 'color:ZombieGreen const
+'99C68E fb:color 'color:FrogGreen const
+'89C35C fb:color 'color:GreenPeas const
+'85BB65 fb:color 'color:DollarBillGreen const
+'8BB381 fb:color 'color:DarkSeaGreen const
+'9CB071 fb:color 'color:IguanaGreen const
+'B2C248 fb:color 'color:AvocadoGreen const
+'9DC209 fb:color 'color:PistachioGreen const
+'A1C935 fb:color 'color:SaladGreen const
+'7FE817 fb:color 'color:HummingbirdGreen const
+'59E817 fb:color 'color:NebulaGreen const
+'57E964 fb:color 'color:StoplightGoGreen const
+'64E986 fb:color 'color:AlgaeGreen const
+'5EFB6E fb:color 'color:JadeGreen const
+'00FF00 fb:color 'color:Green const
+'5FFB17 fb:color 'color:EmeraldGreen const
+'87F717 fb:color 'color:LawnGreen const
+'8AFB17 fb:color 'color:Chartreuse const
+'6AFB92 fb:color 'color:DragonGreen const
+'98FF98 fb:color 'color:Mintgreen const
+'B5EAAA fb:color 'color:GreenThumb const
+'C3FDB8 fb:color 'color:LightJade const
+'CCFB5D fb:color 'color:TeaGreen const
+'B1FB17 fb:color 'color:GreenYellow const
+'BCE954 fb:color 'color:SlimeGreen const
+'EDDA74 fb:color 'color:Goldenrod const
+'EDE275 fb:color 'color:HarvestGold const
+'FFE87C fb:color 'color:SunYellow const
+'FFFF00 fb:color 'color:Yellow const
+'FFF380 fb:color 'color:CornYellow const
+'FFFFC2 fb:color 'color:Parchment const
+'FFFFCC fb:color 'color:Cream const
+'FFF8C6 fb:color 'color:LemonChiffon const
+'FFF8DC fb:color 'color:Cornsilk const
+'F5F5DC fb:color 'color:Beige const
+'FBF6D9 fb:color 'color:Blonde const
+'FAEBD7 fb:color 'color:AntiqueWhite const
+'F7E7CE fb:color 'color:Champagne const
+'FFEBCD fb:color 'color:BlanchedAlmond const
+'F3E5AB fb:color 'color:Vanilla const
+'ECE5B6 fb:color 'color:TanBrown const
+'FFE5B4 fb:color 'color:Peach const
+'FFDB58 fb:color 'color:Mustard const
+'FFD801 fb:color 'color:RubberDuckyYellow const
+'FDD017 fb:color 'color:BrightGold const
+'EAC117 fb:color 'color:Goldenbrown const
+'F2BB66 fb:color 'color:MacaroniandCheese const
+'FBB917 fb:color 'color:Saffron const
+'FBB117 fb:color 'color:Beer const
+'FFA62F fb:color 'color:Cantaloupe const
+'E9AB17 fb:color 'color:BeeYellow const
+'E2A76F fb:color 'color:BrownSugar const
+'DEB887 fb:color 'color:BurlyWood const
+'FFCBA4 fb:color 'color:DeepPeach const
+'C9BE62 fb:color 'color:GingerBrown const
+'E8A317 fb:color 'color:SchoolBusYellow const
+'EE9A4D fb:color 'color:SandyBrown const
+'C8B560 fb:color 'color:FallLeafBrown const
+'D4A017 fb:color 'color:OrangeGold const
+'C2B280 fb:color 'color:Sand const
+'C7A317 fb:color 'color:CookieBrown const
+'C68E17 fb:color 'color:Caramel const
+'B5A642 fb:color 'color:Brass const
+'ADA96E fb:color 'color:Khaki const
+'C19A6B fb:color 'color:Camelbrown const
+'CD7F32 fb:color 'color:Bronze const
+'C88141 fb:color 'color:TigerOrange const
+'C58917 fb:color 'color:Cinnamon const
+'AF9B60 fb:color 'color:BulletShell const
+'AF7817 fb:color 'color:DarkGoldenrod const
+'B87333 fb:color 'color:Copper const
+'966F33 fb:color 'color:Wood const
+'806517 fb:color 'color:OakBrown const
+'827839 fb:color 'color:Moccasin const
+'827B60 fb:color 'color:ArmyBrown const
+'786D5F fb:color 'color:Sandstone const
+'493D26 fb:color 'color:Mocha const
+'483C32 fb:color 'color:Taupe const
+'6F4E37 fb:color 'color:Coffee const
+'835C3B fb:color 'color:BrownBear const
+'7F5217 fb:color 'color:RedDirt const
+'7F462C fb:color 'color:Sepia const
+'C47451 fb:color 'color:OrangeSalmon const
+'C36241 fb:color 'color:Rust const
+'C35817 fb:color 'color:RedFox const
+'C85A17 fb:color 'color:Chocolate const
+'CC6600 fb:color 'color:Sedona const
+'E56717 fb:color 'color:PapayaOrange const
+'E66C2C fb:color 'color:HalloweenOrange const
+'F87217 fb:color 'color:PumpkinOrange const
+'F87431 fb:color 'color:ConstructionConeOrange const
+'E67451 fb:color 'color:SunriseOrange const
+'FF8040 fb:color 'color:MangoOrange const
+'F88017 fb:color 'color:DarkOrange const
+'FF7F50 fb:color 'color:Coral const
+'F88158 fb:color 'color:BasketBallOrange const
+'F9966B fb:color 'color:LightSalmon const
+'E78A61 fb:color 'color:Tangerine const
+'E18B6B fb:color 'color:DarkSalmon const
+'E77471 fb:color 'color:LightCoral const
+'F75D59 fb:color 'color:BeanRed const
+'E55451 fb:color 'color:ValentineRed const
+'E55B3C fb:color 'color:ShockingOrange const
+'FF0000 fb:color 'color:Red const
+'FF2400 fb:color 'color:Scarlet const
+'F62217 fb:color 'color:RubyRed const
+'F70D1A fb:color 'color:FerrariRed const
+'F62817 fb:color 'color:FireEngineRed const
+'E42217 fb:color 'color:LavaRed const
+'E41B17 fb:color 'color:LoveRed const
+'DC381F fb:color 'color:Grapefruit const
+'C34A2C fb:color 'color:ChestnutRed const
+'C24641 fb:color 'color:CherryRed const
+'C04000 fb:color 'color:Mahogany const
+'C11B17 fb:color 'color:ChilliPepper const
+'9F000F fb:color 'color:Cranberry const
+'990012 fb:color 'color:RedWine const
+'8C001A fb:color 'color:Burgundy const
+'954535 fb:color 'color:Chestnut const
+'7E3517 fb:color 'color:BloodRed const
+'8A4117 fb:color 'color:Sienna const
+'7E3817 fb:color 'color:Sangria const
+'800517 fb:color 'color:Firebrick const
+'810541 fb:color 'color:Maroon const
+'7D0541 fb:color 'color:PlumPie const
+'7E354D fb:color 'color:VelvetMaroon const
+'7D0552 fb:color 'color:PlumVelvet const
+'7F4E52 fb:color 'color:RosyFinch const
+'7F5A58 fb:color 'color:Puce const
+'7F525D fb:color 'color:DullPurple const
+'B38481 fb:color 'color:RosyBrown const
+'C5908E fb:color 'color:KhakiRose const
+'C48189 fb:color 'color:PinkBow const
+'C48793 fb:color 'color:LipstickPink const
+'E8ADAA fb:color 'color:Rose const
+'ECC5C0 fb:color 'color:RoseGold const
+'EDC9AF fb:color 'color:DesertSand const
+'FDD7E4 fb:color 'color:PigPink const
+'FCDFFF fb:color 'color:CottonCandy const
+'FFDFDD fb:color 'color:PinkBubbleGum const
+'FBBBB9 fb:color 'color:MistyRose const
+'FAAFBE fb:color 'color:Pink const
+'FAAFBA fb:color 'color:LightPink const
+'F9A7B0 fb:color 'color:FlamingoPink const
+'E7A1B0 fb:color 'color:PinkRose const
+'E799A3 fb:color 'color:PinkDaisy const
+'E38AAE fb:color 'color:CadillacPink const
+'F778A1 fb:color 'color:CarnationPink const
+'E56E94 fb:color 'color:BlushRed const
+'F660AB fb:color 'color:HotPink const
+'FC6C85 fb:color 'color:WatermelonPink const
+'F6358A fb:color 'color:VioletRed const
+'F52887 fb:color 'color:DeepPink const
+'E45E9D fb:color 'color:PinkCupcake const
+'E4287C fb:color 'color:PinkLemonade const
+'F535AA fb:color 'color:NeonPink const
+'FF00FF fb:color 'color:Magenta const
+'E3319D fb:color 'color:DimorphothecaMagenta const
+'F433FF fb:color 'color:BrightNeonPink const
+'D16587 fb:color 'color:PaleVioletRed const
+'C25A7C fb:color 'color:TulipPink const
+'CA226B fb:color 'color:MediumVioletRed const
+'C12869 fb:color 'color:RoguePink const
+'C12267 fb:color 'color:BurntPink const
+'C25283 fb:color 'color:BashfulPink const
+'C12283 fb:color 'color:DarkCarnationPink const
+'B93B8F fb:color 'color:Plum const
+'7E587E fb:color 'color:ViolaPurple const
+'571B7E fb:color 'color:PurpleIris const
+'583759 fb:color 'color:PlumPurple const
+'4B0082 fb:color 'color:Indigo const
+'461B7E fb:color 'color:PurpleMonster const
+'4E387E fb:color 'color:PurpleHaze const
+'614051 fb:color 'color:Eggplant const
+'5E5A80 fb:color 'color:Grape const
+'6A287E fb:color 'color:PurpleJam const
+'7D1B7E fb:color 'color:DarkOrchid const
+'A74AC7 fb:color 'color:PurpleFlower const
+'B048B5 fb:color 'color:MediumOrchid const
+'6C2DC7 fb:color 'color:PurpleAmethyst const
+'842DCE fb:color 'color:DarkViolet const
+'8D38C9 fb:color 'color:Violet const
+'7A5DC7 fb:color 'color:PurpleSageBush const
+'7F38EC fb:color 'color:LovelyPurple const
+'8E35EF fb:color 'color:Purple const
+'893BFF fb:color 'color:AztechPurple const
+'8467D7 fb:color 'color:MediumPurple const
+'A23BEC fb:color 'color:JasminePurple const
+'B041FF fb:color 'color:PurpleDaffodil const
+'C45AEC fb:color 'color:TyrianPurple const
+'9172EC fb:color 'color:CrocusPurple const
+'9E7BFF fb:color 'color:PurpleMimosa const
+'D462FF fb:color 'color:HeliotropePurple const
+'E238EC fb:color 'color:Crimson const
+'C38EC7 fb:color 'color:PurpleDragon const
+'C8A2C8 fb:color 'color:Lilac const
+'E6A9EC fb:color 'color:BlushPink const
+'E0B0FF fb:color 'color:Mauve const
+'C6AEC7 fb:color 'color:WisteriaPurple const
+'F9B7FF fb:color 'color:BlossomPink const
+'D2B9D3 fb:color 'color:Thistle const
+'E9CFEC fb:color 'color:Periwinkle const
+'EBDDE2 fb:color 'color:LavenderPinocchio const
+'E3E4FA fb:color 'color:Lavenderblue const
+'FDEEF4 fb:color 'color:Pearl const
+'FFF5EE fb:color 'color:SeaShell const
+'FEFCFF fb:color 'color:MilkWhite const
+'FFFFFF fb:color 'color:White const
+~~~
+
+~~~
+color:OrangeSalmon #10 #10 #100 fb:hline
+draw
+~~~
+
+```
+             _
+  __ _ _   _| |_ ___  _ __  ___ _   _
+ / _` | | | | __/ _ \| '_ \/ __| | | |
+| (_| | |_| | || (_) | |_) \__ | |_| |
+ \__,_|\__,_|\__\___/| .__/|___/\__, |
+                     |_|        |___/
+Autopsy is a set of debugging tools for RETRO.
+
+Background
+RETRO runs on a virtual machine called Nga. The instruction set is MISC inspired, consisting of just 30 instructions:
+
+0 ..    5 pu    10 re    15 fe    20 di    25 zr
+1 li    6 po    11 eq    16 st    21 an    26 en
+2 du    7 ju    12 ne    17 ad    22 or    27 ie
+3 dr    8 ca    13 lt    18 su    23 xo    28 iq
+4 sw    9 cc    14 gt    19 mu    24 sh    29 ii
+The first two characters of each instruction name are sufficient to identify the instruction.
+```
+
+Nga exposes memory as an array of 32-bit signed integers. Each memory location can store four instructions. The assembler expects the instructions to be named using their two character identifiers. E.g.,
+
+'lica.... i
+#100 d
+Disassembly
+I use '..' for 'no(p)' and then construct a string with all of these. This will be used to resolve names. The ?? at the end will be used for unidentified instructions.
+
+~~~
+'..lidudrswpupojucaccreeqneltgtfestadsumudianorxoshzrenieiqii??
+'INST s:const
+~~~
+Since instructions are packed, I need to unpack them before I can run or display the individual instructions. I implement unpack for this.
+
+~~~
+{{
+  :mask #255 and ;
+  :next #8 shift ;
+---reveal---
+  :unpack (n-dcba)
+    dup mask swap next
+    dup mask swap next
+    dup mask swap next
+    'abcd 'dcba reorder ;
+}}
+~~~
+Now it's possible to write words to display instruction bundles. The formats are kept simple. For a bundle with lit / lit / add / lit, this will display either the opcodes (1,1,17,1) or a string with the abbreviations (liliadli).
+
+~~~
+:name-for (n-cc)
+  #30 n:min #2 * &INST + fetch-next swap fetch swap ;
+
+:display:bundle<raw> (n-)
+  unpack '%n,%n,%n,%n s:format s:put ;
+
+:display:bundle<named> (n-)
+  unpack #4 [ name-for c:put c:put ] times ;
+~~~
+So now I'm ready to write an actual disassembler. I'll provide an output formatted like this:
+
+(address) 'instructionbundle i
+(address) #value d (possibly_`reference`)
+If the value corresponds to a word in the Dictionary, the disassembler will display a message indicating the possible name that corresponds to the value.
+
+To begin, I'll add a variable to track the number of li instructions. (These require special handling as they push a value in the following cells to the stack).
+
+~~~
+'LitCount var
+~~~
+I then wrap name-for with a simple check that increments LitCount as needed.
+
+~~~
+:name-for<counting-li> (n-cc)
+  dup #1 eq? [ &LitCount v:inc ] if name-for ;
+~~~
+To actually display a bundle, I need to decide on what it is. So I have a validate word to look at each instruction and make sure all are actual instructions.
+
+~~~
+:valid? (n-f)
+  unpack
+  [ #0 #29 n:between? ] bi@ and
+  [ [ #0 #29 n:between? ] bi@ and ] dip and ;
+~~~
+With this and the LitCount, I can determine how to render a bundle.
+
+I split out each type (instruction, reference/raw, and data) into a separate handler.
+
+~~~
+:render-inst (n-)
+  $' c:put unpack #4 [ name-for<counting-li> c:put c:put ] times sp $i c:put ;
+
+:render-data (n-)
+  $# c:put n:to-string s:put sp $d c:put ;
+
+:render-ref  (n-)
+  dup d:lookup-xt n:-zero?
+    [ dup render-data
+      d:lookup-xt d:name '\t\t(possibly\_`%s`) s:format s:put ]
+    [     render-data ] choose ;
+~~~
+Then I use these and my valid? checker to implement a single word to render the packed cell in a meaningful manner.
+
+~~~
+:render-packed (n-)
+  @LitCount n:zero?
+  [ dup valid?
+    [ render-inst  ]
+    [ render-ref ] choose ]
+  [ render-ref &LitCount v:dec ] choose ;
+~~~
+And now to tie it all together:
+
+~~~
+'TryToIdentifyWords var
+
+:disassemble (an-)
+  #0 !LitCount
+  [
+    @TryToIdentifyWords
+    [ dup d:lookup-xt n:-zero?
+      [ dup d:lookup-xt d:name nl s:put nl ] if ] if
+    fetch-next
+    over $( c:put n:dec n:put $) c:put sp (address)
+    render-packed nl  (inst_or_data)
+  ] times drop ;
+~~~
+Execution Trace and Single Stepper
+Ok, now on to the fun bit: execution trace and single stepping through a word.
+
+This entails writing an implementation of Nga in RETRO. So to start, setup space for the data and address ("return") stacks, as well as variables for the stack pointers and instruction pointer.
+
+~~~
+'DataStack   d:create  #128 allot
+'ReturnStack d:create  #768 allot
+'SP var
+'RP var
+'IP var
+~~~
+I also set up space for the actual RAM. When single stepping or tracing, Autopsy will copy the actual RAM to this before proceeding. Note that this is limited to 128K cells.
+
+~~~
+FREE #3 / dup 'IMAGE const
+FREE swap -   'IMAGE-SIZE const
+~~~
+Next, helpers to push values from the real stacks to the simulated ones. The stack pointer will point to the next available cell, not the actual top element.
+
+~~~
+:>s (n-) &DataStack @SP + store &SP v:inc ;
+:s> (-n) &SP v:dec &DataStack @SP + fetch ;
+:>r (n-) &ReturnStack @RP + store &RP v:inc ;
+:r> (-n) &RP v:dec &ReturnStack @RP + fetch ;
+~~~
+One more helper, [IP] will return the value in memory at the location IP points to.
+
+~~~
+:[IP] @IP fetch ;
+~~~
+Now for the instructions. I have a separate word for each instruction and then a jump table of addresses that point to these.
+
+~~~
+:i:no                            ;
+:i:li       &IP v:inc [IP] >s    ;
+:i:du s>    dup            >s >s ;
+:i:dr s>    drop                 ;
+:i:sw s> s> swap           >s >s ;
+:i:pu s>    >r                   ;
+:i:po       r>             >s    ;
+:i:ju s>    n:dec !IP            ;
+:i:ca       @IP >r i:ju          ;
+:i:cc s> s> [ >s i:ca ] [ drop ] choose ;
+:i:re       r> !IP               ;
+:i:eq s> s> eq?            >s    ;
+:i:ne s> s> -eq?           >s    ;
+:i:lt s> s> swap lt?       >s    ;
+:i:gt s> s> swap gt?       >s    ;
+:i:fe s>    #-1 [ @SP     >s ] case
+            #-2 [ @RP     >s ] case
+            #-3 [ IMAGE-SIZE >s ] case
+            IMAGE + fetch  >s    ;
+:i:st s> s> swap IMAGE + store   ;
+:i:ad s> s> +              >s    ;
+:i:su s> s> swap -         >s    ;
+:i:mu s> s> *              >s    ;
+:i:di s> s> swap /mod swap >s >s ;
+:i:an s> s> and            >s    ;
+:i:or s> s> or             >s    ;
+:i:xo s> s> xor            >s    ;
+:i:sh s> s> swap shift     >s    ;
+:i:zr s>    dup n:zero? [ drop i:re ] [ >s ] choose ;
+:i:en       #0 !RP               ;
+:i:ie       #1             >s    ;
+:i:iq       #0 dup         >s >s ;
+:i:ii s> s> nip c:put            ;
+~~~
+With the instructions defined, populate the jump table. The order is crucial as the opcode number will be the index into this table.
+
+~~~
+'Instructions d:create
+  &i:no ,  &i:li ,  &i:du ,  &i:dr ,  &i:sw ,  &i:pu ,
+  &i:po ,  &i:ju ,  &i:ca ,  &i:cc ,  &i:re ,  &i:eq ,
+  &i:ne ,  &i:lt ,  &i:gt ,  &i:fe ,  &i:st ,  &i:ad ,
+  &i:su ,  &i:mu ,  &i:di ,  &i:an ,  &i:or ,  &i:xo ,
+  &i:sh ,  &i:zr ,  &i:en ,  &i:ie ,  &i:iq ,  &i:ii ,
+~~~
+With the populated table of instructions, implementing a process-single-opcode is easy. This will check the instruction to make sure it's valid, then call the corresponding handler in the instruction table. If not valid, this will report an error.
+
+~~~
+:process-single-opcode (n-)
+  dup #0 #29 n:between?
+  [ &Instructions + fetch call ]
+  [ 'Invalid_Instruction:_%n_! s:format s:put nl ] choose ;
+~~~
+Next is to unpack an instruction bundle and process each instruction.
+
+~~~
+:process-packed-opcode (n-)
+  unpack
+  process-single-opcode
+  process-single-opcode
+  process-single-opcode
+  process-single-opcode ;
+~~~
+So the guts of the Nga-in-RETRO are done at this point. Next is a method of stepping through execution of a word.
+
+This will display output indicating state. It'll provide:
+
+• current memory location
+• values in instruction bundle
+• stack depths
+• data stack before execution
+• data stack after exection
+E.g.,
+
+IP:13966 SP:3 RP:1
+  [19,0,0,0] - mu......
+  Stack: 9 3 3  -> 9 9
+So helpers for displaying things:
+
+~~~
+:display-data-stack
+  'DS:_ s:put
+  #0 @SP [ &DataStack over + fetch n:put sp n:inc ] times drop ;
+
+:display-return-stack
+  'RS:_ s:put
+  #0 @RP [ &ReturnStack over + fetch n:put sp n:inc ] times drop ;
+~~~
+And then using the display helpers and instruction processor, a single stepper. (This also updates a Steps counter)
+
+~~~
+'Steps var
+
+:take-step
+  [IP] process-packed-opcode &IP v:inc
+  &Steps v:inc ;
+
+{{
+  :sep          #63 [ $- c:put ] times nl ;
+  :named-word?  @IP d:lookup-xt n:-zero? ;
+  :show-name    0; drop @IP d:lookup-xt d:name s:put nl ;
+  :instruction  [IP] [ unpack ] sip ;
+  :names        #4 [ name-for<counting-li> c:put c:put ] times ;
+  :format       '%n,%n,%n,%n s:format ;
+  :pad          s:length #16 swap - #0 n:max [ sp ] times ;
+  :opcodes      format dup s:put pad ;
+  :pad          dup n:to-string s:length #6 swap - #0 n:max [ sp ] times ;
+  :header       'IP: s:put @IP pad n:put
+                @RP @SP '\tSP:%n_RP:%n\t s:format s:put ;
+---reveal---
+  :details      instruction drop names tab instruction [ opcodes ] dip sp n:put nl ;
+  :stacks       display-data-stack nl display-return-stack nl ;
+  :step         sep named-word? show-name header details take-step stacks ;
+}}
+~~~
+And then wrap it with times to run multiple steps.
+
+~~~
+:steps (n-)
+  &step times ;
+~~~
+Then on to the tracer. This will step through execution until the word returns. I use a similar approach to how I handle this in the interface layers for RETRO (word execution ends when the address stack depth reaches zero).
+
+The trace will empty the step counter and display the number of steps used.
+
+~~~
+:copy-image
+  #0 IMAGE IMAGE-SIZE here n:min copy ;
+~~~
+~~~
+:trace (a-)
+  copy-image
+  #0 !Steps #0 !SP
+  !IP #0 >r
+  [ step @RP n:zero? @IP n:negative? or ] until
+  nl @Steps '%n_steps_taken\n s:format s:put ;
+~~~
+Tests
+~~~
+:test
+  \liliaddu `22 `33
+  #3 #4 gt? [ #1 ] if ;
+
+#0 #100 disassemble
+nl '-------------------------- s:put nl
+&TryToIdentifyWords v:on
+#0 #100 disassemble
+~~~
