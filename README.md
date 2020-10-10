@@ -32,13 +32,11 @@ Visit http://localhost:1234/
 
 # Build / Deploy
 
-Assuming you want to host the bundle on `/retrojs`:
-
 ```
 NODE_ENV=production parcel build index.html --public-url ./
 ```
 
-This will output files into `dist/`, which can be upploaded to the webserver of choice.
+Files in `./dist` can be uploaded to a webserver.
 
 # TODO
 
