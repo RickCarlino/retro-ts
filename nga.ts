@@ -7,10 +7,10 @@
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 import { ngaImage } from "./image";
 
-var IMAGE_SIZE = 524288;    /* Amount of simulated RAM    */
-var DATA_DEPTH = 8192;      /* Depth of data stack        */
-var ADDRESS_DEPTH = 32768;  /* Depth of the stacks        */
-var framebuffer = 0;
+const IMAGE_SIZE = 524288;    /* Amount of simulated RAM    */
+const DATA_DEPTH = 8192;      /* Depth of data stack        */
+const ADDRESS_DEPTH = 32768;  /* Depth of the stacks        */
+let framebuffer = 0;
 
 
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
@@ -67,7 +67,7 @@ class Stack {
   }
 
   swap = () => {
-    var a = this.nos();
+    const a = this.nos();
     this.data[this.sp - 1] = this.tos();
     this.data[this.sp] = a;
   }
@@ -118,14 +118,14 @@ enum Opcodes {
   II = 29,
 }
 
-var ip = 0;
-var data = new Stack(DATA_DEPTH);
-var address = new Stack(ADDRESS_DEPTH);
-var image = new Array(IMAGE_SIZE);
-var vm = Opcodes;
-var instructions: (() => void)[] = new Array(vm.II + 1);
-var notfound = 0;
-var interpret = 0;
+let ip = 0;
+const data = new Stack(DATA_DEPTH);
+const address = new Stack(ADDRESS_DEPTH);
+let image = new Array(IMAGE_SIZE);
+const vm = Opcodes;
+const instructions: (() => void)[] = new Array(vm.II + 1);
+let notfound = 0;
+let interpret = 0;
 
 function rxPrepareVM() {
   ip = 0;
@@ -162,7 +162,7 @@ instructions[vm.CALL] = () => {
   ip = data.pop() - 1;
 }
 instructions[vm.CCALL] = () => {
-  var a, b;
+  let a, b;
   a = data.pop();
   b = data.pop();
   if (b != 0) {
@@ -174,7 +174,7 @@ instructions[vm.RETURN] = () => {
   ip = address.pop();
 }
 instructions[vm.EQ] = () => {
-  var a, b;
+  let a, b;
   a = data.pop();
   b = data.pop();
   if (b == a)
@@ -183,7 +183,7 @@ instructions[vm.EQ] = () => {
     data.push(0);
 }
 instructions[vm.NEQ] = () => {
-  var a, b;
+  let a, b;
   a = data.pop();
   b = data.pop();
   if (b != a)
@@ -192,7 +192,7 @@ instructions[vm.NEQ] = () => {
     data.push(0);
 }
 instructions[vm.LT] = () => {
-  var a, b;
+  let a, b;
   a = data.pop();
   b = data.pop();
   if (b < a)
@@ -202,7 +202,7 @@ instructions[vm.LT] = () => {
 }
 
 instructions[vm.GT] = () => {
-  var a, b;
+  let a, b;
   a = data.pop();
   b = data.pop();
   if (b > a)
@@ -234,32 +234,32 @@ instructions[vm.STORE] = () => {
 }
 
 instructions[vm.ADD] = () => {
-  var x = data.pop();
-  var y = data.pop();
+  const x = data.pop();
+  const y = data.pop();
   data.push(x + y);
 }
 instructions[vm.SUB] = () => {
-  var x = data.pop();
-  var y = data.pop();
+  const x = data.pop();
+  const y = data.pop();
   data.push(y - x);
 }
 instructions[vm.MUL] = () => {
-  var x = data.pop();
-  var y = data.pop();
+  const x = data.pop();
+  const y = data.pop();
   data.push(y * x);
 }
 instructions[vm.DIVMOD] = () => {
-  var b = data.pop();
-  var a = data.pop();
+  const b = data.pop();
+  const a = data.pop();
   if (b == 0) {
     ip = 0;
     data.sp = 0;
     address.sp = 0;
   } else {
-    var x = Math.abs(b);
-    var y = Math.abs(a);
-    var q = Math.floor(y / x);
-    var r = y % x;
+    const x = Math.abs(b);
+    const y = Math.abs(a);
+    let q = Math.floor(y / x);
+    let r = y % x;
     if (a < 0 && b < 0)
       r = r * -1;
     if (a > 0 && b < 0)
@@ -273,23 +273,23 @@ instructions[vm.DIVMOD] = () => {
   }
 }
 instructions[vm.AND] = () => {
-  var x = data.pop();
-  var y = data.pop();
+  const x = data.pop();
+  const y = data.pop();
   data.push(x & y);
 }
 instructions[vm.OR] = () => {
-  var x = data.pop();
-  var y = data.pop();
+  const x = data.pop();
+  const y = data.pop();
   data.push(x | y);
 }
 instructions[vm.XOR] = () => {
-  var x = data.pop();
-  var y = data.pop();
+  const x = data.pop();
+  const y = data.pop();
   data.push(x ^ y);
 }
 instructions[vm.SHIFT] = () => {
-  var x = data.pop();
-  var y = data.pop();
+  const x = data.pop();
+  let y = data.pop();
   if (x < 0)
     data.push(y << (x * -1));
   else
@@ -308,7 +308,7 @@ instructions[vm.IE] = () => {
   data.push(2);
 }
 instructions[vm.IQ] = () => {
-  var chosen = data.pop();
+  const chosen = data.pop();
   if (chosen == 0) {
     data.push(0);
     data.push(0);
@@ -318,9 +318,9 @@ instructions[vm.IQ] = () => {
   }
 }
 instructions[vm.II] = () => {
-  var chosen = data.pop();
+  const chosen = data.pop();
   if (chosen == 0) {
-    var s = String.fromCharCode(data.pop());
+    const s = String.fromCharCode(data.pop());
     writeConsole(s);
   } else if (chosen == 1) {
     draw(data.pop())
@@ -337,10 +337,10 @@ function processOpcode(opcode: number) {
 }
 
 function validatePackedOpcodes(opcode: number) {
-  var raw = opcode;
-  var current;
-  var valid = -1;
-  var i = 0;
+  let raw = opcode;
+  let current: number;
+  let valid = -1;
+  let i = 0;
   while (i < 4) {
     current = raw & 0xFF;
     if (!(current >= 0 && current <= 29))
@@ -373,7 +373,7 @@ function loadInitialImage() {
 }
 
 function execute(offset: number) {
-  var opcode;
+  let opcode;
   address.sp = 1;
   ip = offset;
   while (ip < IMAGE_SIZE) {
@@ -394,9 +394,9 @@ function execute(offset: number) {
 }
 
 function checkStack() {
-  var depth = data.depth();
-  var adepth = address.depth();
-  var flag = 0;
+  const depth = data.depth();
+  const adepth = address.depth();
+  let flag = 0;
   if (depth < 0 || adepth < 0) {
     flag = -1;
   }
@@ -411,8 +411,8 @@ function checkStack() {
 }
 
 function string_inject(str: string, buffer: number) {
-  var m = str.length;
-  var i = 0;
+  let m = str.length;
+  let i = 0;
   while (m > 0) {
     image[buffer + i] = str[i].charCodeAt(0);
     image[buffer + i + 1] = 0;
@@ -423,7 +423,7 @@ function string_inject(str: string, buffer: number) {
 
 function string_extract(at: number) {
   let string_data = "";
-  var starting = at;
+  let starting = at;
   while (image[starting] != 0) {
     string_data += String.fromCharCode(image[starting++]);
   }
@@ -439,9 +439,9 @@ function d_name(dt: number) {
 }
 
 function d_lookup(name: string) {
-  var dt = 0;
-  var i = image[2];
-  var dName;
+  let dt = 0;
+  let i = image[2];
+  let dName: string;
   while (image[i] != 0 && i != 0) {
     dName = string_extract(d_name(i));
     if (dName == name) {
@@ -476,10 +476,10 @@ function cls() {
 
 function unu(src: string) {
   const raw = src.split("\n");
-  var i = raw.length;
-  var lines = new Array();
-  var j = 0;
-  var code = 0;
+  const i = raw.length;
+  const lines = new Array();
+  let j = 0;
+  let code = 0;
   while (j < i) {
     if (code == 1 && raw[j] == "~~~") {
       code = 0;
@@ -500,8 +500,8 @@ function go() {
   interpret = d_xt_for("interpret");
   clearConsole();
   const tokens = unu(getInputBuffer()).match(/\S+/g) || "";
-  var i = tokens.length;
-  var j = 0;
+  let i = tokens.length;
+  let j = 0;
   while (j < i) {
     evaluate(tokens[j]);
     j++;
@@ -513,7 +513,7 @@ function go() {
     s = s + data.data[j] + " ";
     j++;
   }
-  // writeConsole("\n" + s);
+
   if (framebuffer === 0) {
     canvas.style.display = "none";
   } else {
@@ -541,13 +541,12 @@ function loadproject() {
 
 function draw(fb_start: number) {
   framebuffer = 1;
-  var ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d');
   if (!ctx) {
     throw new Error("No context");
   }
-  var imgData = ctx.createImageData(300, 300);
-  var i;
-  for (i = 0; i < imgData.data.length / 4; i += 1) {
+  const imgData = ctx.createImageData(300, 300);
+  for (let i = 0; i < imgData.data.length / 4; i += 1) {
     imgData.data[i * 4 + 0] = ((image[i + fb_start] >> 8) >> 8) & 255;
     imgData.data[i * 4 + 1] = (image[i + fb_start] >> 8) & 255;
     imgData.data[i * 4 + 2] = image[i + fb_start] & 255;
