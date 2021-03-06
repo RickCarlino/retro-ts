@@ -41,5 +41,6 @@ Files in `./dist` can be uploaded to a webserver.
 # TODO
 
  - [ ] Add [Monaco Editor](https://microsoft.github.io/monaco-editor/) to page instead of HTML text box.
+ - [ ] Add VT100.js to page instead of HTML text box.
  - [ ] Improve canvas support
- - [ ] Use a `step()` function instead of a loop to avoid blocking main thread.
+ - [ ] Use a `step()` function instead of a loop to avoid blocking main thread (use `setInerval(0,...)` instead).
