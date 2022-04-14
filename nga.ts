@@ -493,7 +493,7 @@ function unu(src: string) {
   return lines.join(" ");
 }
 
-function go() {
+function* go() {
   rxPrepareVM();
   loadInitialImage();
   notfound = d_xt_for("err:notfound");
@@ -505,6 +505,7 @@ function go() {
   while (j < i) {
     evaluate(tokens[j]);
     j++;
+    yield j;
   }
   let s = "";
   i = data.depth();
@@ -512,6 +513,7 @@ function go() {
   while (j <= i) {
     s = s + data.data[j] + " ";
     j++;
+    yield j;
   }
 
   if (framebuffer === 0) {
@@ -558,4 +560,19 @@ function draw(fb_start: number) {
 (window as any).loadproject = loadproject;
 (window as any).saveproject = saveproject;
 (window as any).cls = cls;
-(window as any).go = go;
+let handle = 0;
+const iter = go();
+(window as any).go = function () {
+  handle = requestAnimationFrame(() => {
+    const startTime = performance.now()
+    let done = false;
+    while (!done) {
+      const result = iter.next();
+      done = !!result.done;
+      console.log(result.value);
+    }
+    cancelAnimationFrame(handle);
+    const endTime = performance.now()
+    console.log(`RetroForth finished in ${endTime - startTime} milliseconds`)
+  });
+}
